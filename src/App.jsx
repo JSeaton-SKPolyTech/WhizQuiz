@@ -2,10 +2,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import {HomePage, RoomPage, JoinPage, NewQuiz} from './views';
 import { Nav } from './components';
-import exportTest from './API/init';
 
 function App() {
-	console.log(exportTest);
 
 	return (
         <BrowserRouter>

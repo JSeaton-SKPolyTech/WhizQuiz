@@ -1,9 +1,10 @@
+import exportTest from "../API/init";
 
 function HomePage() {
 
     return (
         <div>
-            <h1>Welcome to the Quiz Game</h1>
+            <h1>{exportTest}</h1>
         </div>
     );
 }
