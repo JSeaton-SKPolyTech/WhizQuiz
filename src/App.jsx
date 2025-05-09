@@ -1,11 +1,11 @@
-import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import {HomePage, RoomPage, JoinPage, NewQuiz} from './views';
 import { Nav } from './components';
+import exportTest from './API/init';
 
 function App() {
-	const [count, setCount] = useState(0)
+	console.log(exportTest);
 
 	return (
         <BrowserRouter>
