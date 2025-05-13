@@ -1,10 +1,11 @@
-import exportTest from "../API/init";
+import { getQuiz } from '../API/apiCalls';
 
-function HomePage() {
+getQuiz();
 
+function HomePage() {	
     return (
         <div>
-            <h1>{exportTest}</h1>
+            <h1>Welcome, homepage</h1>
         </div>
     );
 }

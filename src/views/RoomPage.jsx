@@ -1,26 +1,72 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router-dom';
+
+import supabase from '../API/init';
 
 function RoomPage() {
     const { id } = useParams();
-    const [room, setRoom] = useState(null);
-    const [error, setError] = useState(null);
+    let timer = useRef(10);
+    let first = useRef(true);
+    const [count, setCount] = useState(timer.current);
+    const [roomData, setRoomData] = useState(null);
+    let timerCount;
 
-    if (error) {
-        return <div>Error: {error}</div>;
+    function countDown(){
+        if(timer.current > 0){
+            --timer.current;
+            setCount(timer.current);
+        }else{
+            clearInterval(timerCount);
+        }
     }
 
-    if (!room) {
-        return <div>Loading...</div>;
+    function updateQuestion(){
+        let num = roomData.current_question + 1;
+        supabase.from('room')
+            .update({current_question: num})
+            .eq('room_id', 1)
+        .then(function(res, err){
+            if(err){
+                console.log(err);
+            }
+        });
     }
 
-    return (
-        <div>
-            <p>{room.quiz[0].Question}</p>
-            <p>{room.quiz[0].A}</p>
-            <p>{room.quiz[0].B}</p>
-            <p>{room.quiz[0].C}</p>
-        </div>
+    useEffect(function(){
+        if(first.current){
+            first.current = false;
+            timerCount = setInterval(countDown, 1000);
+
+            supabase.from('room')
+                .select(`*`)
+                .eq('room_id', 1)
+            .then(function(res){
+                setRoomData(res.data[0]);
+            }).catch(function(err){
+                console.log(err);
+            });
+
+            const updateChannel = supabase.channel('question-change')
+                .on('postgres_changes',
+                    {
+                        event: 'UPDATE',
+                        schema: 'public',
+                        table: 'room'
+                    }, function(payload){ 
+                        console.log('payload: ', payload);
+                        setRoomData(payload.new);
+                    }
+                )
+            .subscribe();
+        }   
+    }, []);
+
+    return(
+        <>
+            {roomData ? roomData.current_question : 'Loading...' }
+            <br />
+            <input type='button' value='increase' onClick={updateQuestion} />
+        </>
     );
 }
 
