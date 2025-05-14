@@ -8,31 +8,33 @@ function HomePage() {
 	const [userPassword, setUserPassword] = useState("");
 
     return (
-		<div className="white-overlay add-flex">
-			<div className="flex-grow"><img className="login-image centre-vertically" src={loginImage} alt="decorative graphic of a quiz" /></div>
-			<div className="flex-grow login-form">
-				<h1>Whiz Quiz</h1>
-				<p className="subtitle">Train Your Brain. Master the Game.</p>
-				<div className="centre-vertically ">
-					<div className="login-inputs">
-						<LabelledInput 
-							label="Email"
-							id="email"
-							setState={setUserEmail}
-							state={userEmail}
-						/>
-						<LabelledInput
-							label="Password"
-							id="password"
-							type="password"
-							setState={setUserPassword}
-							state={userPassword}
-						/>
+		<div className="login-overlay"> 
+			<div className="white-overlay add-flex ">
+				<div className="flex-grow"><img className="login-image centre-vertically" src={loginImage} alt="decorative graphic of a quiz" /></div>
+				<div className="flex-grow login-form">
+					<h1>Whiz Quiz</h1>
+					<p className="subtitle">Train Your Brain. Master the Game.</p>
+					<div className="centre-vertically ">
+						<div className="login-inputs">
+							<LabelledInput 
+								label="Email"
+								id="email"
+								setState={setUserEmail}
+								state={userEmail}
+							/>
+							<LabelledInput
+								label="Password"
+								id="password"
+								type="password"
+								setState={setUserPassword}
+								state={userPassword}
+							/>
+						</div>
+						<Button buttonText="Login" />
 					</div>
-					<Button buttonText="Login" />
 				</div>
 			</div>
-        </div>
+		</div>
     );
 }
 

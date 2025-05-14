@@ -8,7 +8,6 @@ function App() {
 	return (
 		<div className='background-graphic'>
 			<BrowserRouter>
-				<Nav />
 				<Routes>
 					<Route path="/" element={<HomePage />} />
 					<Route path="/room/:id" element={<RoomPage />} />

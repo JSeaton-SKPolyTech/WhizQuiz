@@ -1,3 +1,7 @@
+.login-overlay{
+	padding-top: 10vh;
+}
+
 .login-image {
 	display: block;
 	max-height: 600px;
