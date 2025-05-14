@@ -19,11 +19,11 @@ img {
 
 label{
 	display: inline-block;
-	width: 48%;
+	width: 38%;
 	text-align: right;
 }
 input.field{
-	width: 48%;
+	width: 58%;
 }
 input[type='button'] {
 	display: block;
@@ -51,6 +51,11 @@ input[type='button']:active{
 .add-margin{
 	margin: 10px;
 }
+.centre-vertically {
+	position: relative;
+	top: 50%;
+	transform: translateY(-50%);
+}
 
 .background-graphic {
 	width: 100%;
@@ -61,8 +66,9 @@ input[type='button']:active{
 }
 
 .white-overlay {
-	width: 80vw;
-	height: 90vh;
+	width: 60vw;
+	height: 80vh;
+	max-width: 1080px;
 	margin: auto;
 	border-radius: 20px;
 	background-color: rgba(255, 255, 255, 0.8);

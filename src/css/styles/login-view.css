@@ -1,0 +1,15 @@
+.login-image {
+	display: block;
+	max-height: 600px;
+	max-width: 500px;
+	margin: auto;
+}
+
+.login-form {
+	min-width: 40%;
+	padding: 0 5%;
+}
+
+.login-inputs{
+	margin-bottom: 25%;
+}
