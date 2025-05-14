@@ -6,15 +6,17 @@ import { Nav } from './components';
 function App() {
 
 	return (
-        <BrowserRouter>
-            <Nav />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/room/:id" element={<RoomPage />} />
-                <Route path="/join" element={<JoinPage />} />
-                <Route path="/createQuiz" element={<NewQuiz />} />
-            </Routes>
-        </BrowserRouter>
+		<div className='background-graphic'>
+			<BrowserRouter>
+				<Nav />
+				<Routes>
+					<Route path="/" element={<HomePage />} />
+					<Route path="/room/:id" element={<RoomPage />} />
+					<Route path="/join" element={<JoinPage />} />
+					<Route path="/createQuiz" element={<NewQuiz />} />
+				</Routes>
+			</BrowserRouter>
+		</div>
 	)
 }
 
