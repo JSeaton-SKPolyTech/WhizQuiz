@@ -3,7 +3,7 @@ import { useState } from "react";
 import loginImage from '../assets/login-image.png';
 import { LabelledInput, Button } from "../components";
 
-function HomePage() {	
+function LoginPage() {	
 	const [userEmail, setUserEmail] = useState("");
 	const [userPassword, setUserPassword] = useState("");
 
@@ -38,4 +38,4 @@ function HomePage() {
     );
 }
 
-export default HomePage;
+export default LoginPage;
