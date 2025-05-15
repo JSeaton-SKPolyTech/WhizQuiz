@@ -1,6 +1,6 @@
-const Button = function({onClickFunc, buttonText}){
+const Button = function({onClickFunc, buttonText, className=""}){
 	return(
-		<input type="button" onClick={onClickFunc} value={buttonText} />
+		<input className={className} type="button" onClick={onClickFunc} value={buttonText} />
 	);
 };
 

@@ -1,6 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
-import {LoginPage, RoomPage, JoinPage, NewQuiz} from './views';
+import {LoginPage, RoomPage, JoinPage, NewQuiz, Dashboard} from './views';
 import { Nav } from './components';
 
 function App() {
@@ -13,6 +13,8 @@ function App() {
 					<Route path="/room/:id" element={<RoomPage />} />
 					<Route path="/join" element={<JoinPage />} />
 					<Route path="/createQuiz" element={<NewQuiz />} />
+					<Route path='/dashboard' element={<Dashboard />} />
+					<Route path='/viewQuiz' />
 				</Routes>
 			</BrowserRouter>
 		</div>

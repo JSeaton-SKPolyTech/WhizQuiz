@@ -49,6 +49,9 @@ input[type='button']:hover{
 input[type='button']:active{
 	background-color: #008676;
 }
+input[type='button'].plus-button{
+	min-width: 50px;
+}
 
 .add-flex{
 	display: flex;

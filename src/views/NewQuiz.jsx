@@ -3,10 +3,14 @@ import { useState } from "react";
 import { LabelledInput, Button } from "../components";
 
 const NewQuiz = function(){
-	const [q, setQ] = useState('');
-	const [a1, setA1] = useState('');
-	const [a2, setA2] = useState('');
-	const [a3, setA3] = useState('');
+
+	const [newQuiz, setNewQuiz] = useState([{}]);
+
+	function updateQuestion(e){}
+
+	function addQuestion(){
+		setNewQuiz([...newQuiz, {}])
+	}
 
 	function createQuiz(){
 		console.log('called function');
@@ -14,36 +18,25 @@ const NewQuiz = function(){
 	};
 
 	return(
-		<>
-			<LabelledInput 
-				label='Enter the Question'
-				id='q'
-				setState={setQ}
-				state={q}
+		<div className="white-overlay">
+			{newQuiz.map(function(label, index){
+				return(
+					<div key={index}>
+						<label htmlFor={"Q" + index}>Question:</label>
+						<input type="text" id={"Q" + index} />
+						<label htmlFor={"A" + index}>Answer:</label>
+						<input type="text" id={"A" + index} />
+						<label htmlFor={"D1" + index}>First Distractor:</label>
+						<input type="text" id={"D1" + index} />
+						<label htmlFor={"D2" + index}>Second Distractor:</label>
+						<input type="text" id={"D2" + index} />
+					</div>
+				)
+			})}
+			<Button className="plus-button" buttonText="+" onClickFunc={addQuestion} />
+			<Button buttonText='Create Quiz' onClickFunc={createQuiz}
 			/>
-			<LabelledInput 
-				label='Enter the first option'
-				id='a1'
-				setState={setA1}
-				state={a1}
-			/>
-			<LabelledInput 
-				label='Enter the second option'
-				id='a2'
-				setState={setA2}
-				state={a2}
-			/>
-			<LabelledInput 
-				label='Enter the third option'
-				id='a3'
-				setState={setA3}
-				state={a3}
-			/>
-			<Button 
-				buttonText='Create Quiz'
-				onClickFunc={createQuiz}
-			/>
-		</>
+		</div>
 	);
 };
 
