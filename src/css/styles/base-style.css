@@ -51,6 +51,7 @@ input[type='button']:active{
 }
 input[type='button'].plus-button{
 	min-width: 50px;
+	margin: 10px;
 }
 
 .add-flex{
@@ -83,6 +84,7 @@ input[type='button'].plus-button{
 	margin: auto;
 	border-radius: 20px;
 	background-color: rgba(255, 255, 255, 0.8);
+	overflow: auto;
 }
 
 .subtitle {

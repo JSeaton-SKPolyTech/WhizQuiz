@@ -1,0 +1,30 @@
+.create-new-quiz-label{
+	width: 30%;
+	margin: 10px 10px 0 10px;
+}
+
+.create-new-quiz-input{
+	margin: 10px 10px 0 10px;
+	width: 60%;
+}
+.question {
+	margin-top: 20px;
+}
+.add-new-question-button{
+	position: relative;
+	left: 85%;
+}
+
+@media screen and (max-width: 800px) {
+	.create-new-quiz-label{
+		display: block;
+		width: 90%;
+		margin: 10px auto;
+		text-align: left;
+	}
+	.create-new-quiz-input{
+		display: block;
+		width: 90%;
+		margin: auto;
+	}
+}

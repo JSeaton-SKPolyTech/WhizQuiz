@@ -10,7 +10,7 @@ function LoginPage() {
     return (
 		<div className="login-overlay"> 
 			<div className="white-overlay add-flex ">
-				<div className="flex-grow"><img className="login-image centre-vertically" src={loginImage} alt="decorative graphic of a quiz" /></div>
+				<div className="flex-grow login-image-div"><img className="login-image centre-vertically" src={loginImage} alt="decorative graphic of a quiz" /></div>
 				<div className="flex-grow login-form">
 					<h1>Whiz Quiz</h1>
 					<p className="subtitle">Train Your Brain. Master the Game.</p>

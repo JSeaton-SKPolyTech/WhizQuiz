@@ -17,3 +17,9 @@
 .login-inputs{
 	margin-bottom: 25%;
 }
+
+@media screen and (max-width: 1500px) {
+	.login-image-div {
+		display: none;
+	}
+}
