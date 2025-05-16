@@ -18,6 +18,19 @@
 	margin-bottom: 25%;
 }
 
+.sign-up-text {
+	text-align: center;
+}
+.sign-up-text > span {
+	color: #fb857d;
+	font-weight: 700;
+	text-decoration: underline;
+}
+.sign-up-text > span:hover {
+	color: #FECCC8;
+	cursor: pointer;
+}
+
 @media screen and (max-width: 1500px) {
 	.login-image-div {
 		display: none;
