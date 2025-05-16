@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { Button, TeacherNav } from "../components";
+import Dashboard from "./Dashboard";
 
 const NewQuiz = function(){
 
@@ -25,7 +26,7 @@ const NewQuiz = function(){
 
 	return(
 		<>
-			<TeacherNav />
+			<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': true}} />
 			<div className="white-overlay">
 				{newQuiz.map(function(label, index){
 					return(
