@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 
 import {LoginPage, RoomPage, JoinPage, NewQuiz, Dashboard} from './views';
-import { Nav } from './components';
 
 function App() {
 

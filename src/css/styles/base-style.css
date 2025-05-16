@@ -49,6 +49,10 @@ input[type='button']:hover{
 input[type='button']:active{
 	background-color: #008676;
 }
+input[type='button']:disabled{
+	background-color: #a5a5a5;
+	color: #d2d2d2;
+}
 input[type='button'].plus-button{
 	min-width: 50px;
 	margin: 10px;

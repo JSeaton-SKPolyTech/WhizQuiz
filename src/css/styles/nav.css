@@ -1,4 +1,11 @@
 nav {
-	padding: 20px 0;
-	background-color: #04D3BC;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 20px;
+	padding: 3%;
+}
+
+input[type='button'].Nav-Button{
+	margin: 0;
 }

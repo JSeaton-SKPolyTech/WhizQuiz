@@ -1,5 +1,5 @@
 import LabelledInput from "./LabelledInput";
 import Button from "./Button";
-import Nav from "./Nav";
+import TeacherNav from "./TeacherNav";
 
-export {LabelledInput, Button, Nav};
+export {LabelledInput, Button, TeacherNav};
