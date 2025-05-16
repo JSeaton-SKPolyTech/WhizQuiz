@@ -13,7 +13,7 @@ function LoginPage() {
 				<div className="flex-grow login-image-div"><img className="login-image centre-vertically" src={loginImage} alt="decorative graphic of a quiz" /></div>
 				<div className="flex-grow login-form">
 					<h1>Whiz Quiz</h1>
-					<p className="subtitle">Train Your Brain. Master the Game.</p>
+					<h2>Train Your Brain. Master the Game.</h2>
 					<div className="centre-vertically ">
 						<div className="login-inputs">
 							<LabelledInput 

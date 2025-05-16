@@ -1,0 +1,35 @@
+.dashboard-quiz-list{
+	position: absolute;
+	right: 0;
+	width: 30%;
+	height: 80%;
+	margin: 0 20px;
+}
+
+.quiz-list {
+	height: 80%;
+	padding: 10px;
+	list-style: none;
+	overflow-y: auto;
+}
+.quiz-list-item{
+	padding: 5px 10px;
+	color: #454545;
+}
+.quiz-list-item:nth-of-type(odd) {
+	background-color: white;
+}
+.quiz-list-item:hover{
+	background-color: #fee90032;
+}
+
+@media screen and (max-width: 800px) {
+	.dashboard-quiz-list{
+		width: calc(100% - 40px);
+		height: 40vh;
+		margin: 0 20px;
+	}
+	.quiz-list {
+		height: 73%;
+	}
+}
