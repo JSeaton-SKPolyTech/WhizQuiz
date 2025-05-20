@@ -79,6 +79,10 @@ input[type='button'].plus-button{
 	top: 50%;
 	transform: translateY(-50%);
 }
+.centre-text {
+	display: block;
+	text-align: center;
+}
 
 .background-graphic {
 	width: 100%;

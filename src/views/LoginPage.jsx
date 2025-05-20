@@ -20,6 +20,7 @@ function LoginPage() {
 			const response = await supabase.from('user').insert({user_id: data.user.id, role: 'teacher'});
 			if(!response.error){
 				sessionStorage.setItem('loggedIn', true);
+				sessionStorage.setItem('userId', data.user.id);
 				navigate('/dashboard');
 			}else{
 				console.log(e);
@@ -29,8 +30,18 @@ function LoginPage() {
 		}
 	}
 
-	function login(){
-		
+	async function login(){
+		const {data, error} = await supabase.auth.signInWithPassword({
+			email: userEmail,
+			password: userPassword
+		});
+		if(!error){
+			sessionStorage.setItem('loggedIn', true);
+			sessionStorage.setItem('userId', data.user.id);
+			navigate('/dashboard');
+		}else{
+			console.log(e);
+		}
 	}
 
     return (
