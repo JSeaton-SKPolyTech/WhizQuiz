@@ -6,6 +6,7 @@ import Dashboard from "./Dashboard";
 const NewQuiz = function(){
 
 	const [newQuiz, setNewQuiz] = useState([{}]);
+	const [inserting, setInserting] = useState(false);
 	let loggedIn = sessionStorage.getItem('loggedIn');
 
 	function updateQuestion(value, field, index){
@@ -20,10 +21,19 @@ const NewQuiz = function(){
 		setNewQuiz([...newQuiz, {}])
 	}
 
-	function createQuiz(){
-		console.log('called function');
-		
-	};
+	function wait(ms) {
+		return new Promise(resolve => setTimeout(resolve, ms));
+	}
+
+	// Example usage in your async function
+	async function createQuiz() {
+		setInserting(true);
+		let timerDone = false;
+		await wait(3000); // wait for 3 seconds
+		timerDone = true;
+		console.log("Timer finished:", timerDone);
+		setInserting(false);
+	}
 
 	if(loggedIn){
 		return(
@@ -45,8 +55,11 @@ const NewQuiz = function(){
 						)
 					})}
 					<Button className="plus-button add-new-question-button" buttonText="+" onClickFunc={addQuestion} />
-					<Button buttonText='Create Quiz' onClickFunc={createQuiz}
-					/>
+					{!inserting ? (
+						<Button buttonText='Create Quiz' onClickFunc={createQuiz} />
+					):(
+						<Button buttonText='Inserting...' disabled={true} />
+					)}
 				</div>
 			</>
 		);
