@@ -1,11 +1,12 @@
 import { useState } from "react";
 
-import { Button, NotLoggedIn, TeacherNav } from "../components";
-import Dashboard from "./Dashboard";
+import supabase from "../API/init";
+import { Button, NotLoggedIn, TeacherNav, LabelledInput } from "../components";
 
 const NewQuiz = function(){
 
 	const [newQuiz, setNewQuiz] = useState([{}]);
+	const [quizName, setQuizName] = useState("");
 	const [inserting, setInserting] = useState(false);
 	let loggedIn = sessionStorage.getItem('loggedIn');
 
@@ -21,17 +22,20 @@ const NewQuiz = function(){
 		setNewQuiz([...newQuiz, {}])
 	}
 
-	function wait(ms) {
-		return new Promise(resolve => setTimeout(resolve, ms));
-	}
-
 	// Example usage in your async function
 	async function createQuiz() {
 		setInserting(true);
-		let timerDone = false;
-		await wait(3000); // wait for 3 seconds
-		timerDone = true;
-		console.log("Timer finished:", timerDone);
+		const {data, error} = await supabase.from('quiz').insert({teacher_id: sessionStorage.getItem('userId'), quiz_name: quizName}).select();
+		if(data){
+			console.log(data[0].quiz_id);
+			const questionIds = [];
+			for(let i = 0; i < newQuiz.length; i++){
+				const {data: qData, error: qErr} = await supabase.from('question').insert({quiz_id: data[0].quiz_id, question: newQuiz[i].Q});
+			}
+		}else{
+			console.log(error);
+		}
+
 		setInserting(false);
 	}
 
@@ -40,6 +44,8 @@ const NewQuiz = function(){
 			<>
 				<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': true}} />
 				<div className="white-overlay">
+					<label className="create-new-quiz-label" htmlFor='quizName'>Quiz Title:</label>
+					<input className="create-new-quiz-input" type="text" id='quizName' onInput={(e)=>{setQuizName(e.target.value)}} value={quizName} />
 					{newQuiz.map(function(label, index){
 						return(
 							<div className="question" key={index}>
