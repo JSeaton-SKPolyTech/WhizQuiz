@@ -10,6 +10,15 @@
 .question {
 	margin-top: 20px;
 }
+.question:hover{
+	position: relative;
+	background-color: #fee90013;
+}
+.fa-window-close{
+	position: absolute;
+	margin-left: 15px;
+	color: #fb857d;
+}
 .add-new-question-button{
 	position: relative;
 	left: 85%;
