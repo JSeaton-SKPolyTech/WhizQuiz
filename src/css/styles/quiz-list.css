@@ -21,6 +21,7 @@
 }
 .quiz-list-item:hover{
 	background-color: #fee90032;
+	cursor: pointer;
 }
 
 @media screen and (max-width: 800px) {

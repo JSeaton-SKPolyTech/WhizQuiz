@@ -13,7 +13,7 @@ function App() {
 					<Route path="/join" element={<JoinPage />} />
 					<Route path="/createQuiz" element={<NewQuiz />} />
 					<Route path='/dashboard' element={<Dashboard />} />
-					<Route path='/viewQuiz' />
+					<Route path='/quiz/:id' />
 				</Routes>
 			</BrowserRouter>
 		</div>
