@@ -104,3 +104,7 @@ input[type='button'].plus-button{
 	background-color: rgba(255, 255, 255, 0.8);
 	overflow: auto;
 }
+
+.loading{
+	margin: 20px 0 0 20px;
+}

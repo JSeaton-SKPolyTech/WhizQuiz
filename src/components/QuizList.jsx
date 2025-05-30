@@ -23,19 +23,6 @@ const QuizList = function({className=''}){
 			calledAPI.current = true;
 		}
 	}, []);
-
-	/* oops - need later
-	useEffect(function(){
-		if(!calledAPI.current){
-			supabase.from('quiz').select(`quiz_id, quiz_name, question ( question_id, question, answer (answer, is_correct) )`).then(function(data){
-				console.log(data);
-			}).catch(function(error){
-				console.log(error)
-			});
-			calledAPI.current = true;
-		}
-	}, []);
-	*/
 	
 	return (
 		<div className={`white-background ${className}`}>
