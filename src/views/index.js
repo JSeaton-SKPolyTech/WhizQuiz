@@ -3,6 +3,6 @@ import RoomPage from "./RoomPage";
 import JoinPage from "./JoinPage";
 import NewQuiz from "./NewQuiz";
 import Dashboard from "./Dashboard";
-import EditQuiz from "./editQuiz";
+import EditQuiz from "./EditQuiz";
 
 export {LoginPage, RoomPage, JoinPage, NewQuiz, Dashboard, EditQuiz};

@@ -99,6 +99,7 @@ const EditQuiz = function(){
 				newQuestions.push(quiz[i]);
 			}
 		}
+		
 		setInserting(false);
 	}
 
