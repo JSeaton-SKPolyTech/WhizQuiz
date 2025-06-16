@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import supabase from "../API/init";
 import { Button, NotLoggedIn, TeacherNav, LabelledInput } from "../components";
@@ -9,6 +10,8 @@ const NewQuiz = function(){
 	const [quizName, setQuizName] = useState("");
 	const [inserting, setInserting] = useState(false);
 	let loggedIn = sessionStorage.getItem('loggedIn');
+
+	const navigator = useNavigate();
 
 	function updateQuestion(value, field, index){
 		setNewQuiz(function(prevQuiz){ 
@@ -66,6 +69,7 @@ const NewQuiz = function(){
 					]
 				);
 			}
+			navigator('/dashboard');
 		}else{
 			console.log(error);
 		}

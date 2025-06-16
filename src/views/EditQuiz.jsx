@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 
 import supabase from "../API/init";
 import { Button, NotLoggedIn, TeacherNav, LabelledInput } from "../components";
@@ -10,6 +10,7 @@ const EditQuiz = function(){
 	const [quiz, setQuiz] = useState(null);
 	const {id} = useParams();
 	const calledAPI = useRef(false);
+	let savedQuizName;
 	const [quizName, setQuizName] = useState("");
 	const [inserting, setInserting] = useState(false);
 
@@ -18,7 +19,7 @@ const EditQuiz = function(){
 			supabase.from('quiz').select(`quiz_id, quiz_name, question ( question_id, question, answer (answer, is_correct) )`).eq('quiz_id', id).then(function(data){
 				setQuiz(data.data[0].question);
 				setQuizName(data.data[0].quiz_name);
-				console.log(data);
+				savedQuizName = data.data[0].quiz_name;
 			}).catch(function(error){
 				console.log(error)
 			});
@@ -27,25 +28,41 @@ const EditQuiz = function(){
 	}, []);
 
 
-	function updateQuestion(value, field, index){
-		setNewQuiz(function(prevQuiz){ 
+	function updateQuestion(value, field, question_id){
+		const index = quiz.findIndex(item => item.question_id === question_id);
+		setQuiz(function(prevQuiz){ 
 			const updatedQuiz = [...prevQuiz];
 			updatedQuiz[index] = { ...updatedQuiz[index], [field]: value };
 			return updatedQuiz;
 		});
 	}
 
+	function updateAnswer(value, question_id, index){
+		const qIndex = quiz.findIndex(item => item.question_id === question_id);
+		setQuiz(function(prevQuiz){ 
+			const updatedQuiz = [...prevQuiz];
+			const updatedAnswers = [...updatedQuiz[qIndex].answer]
+			updatedAnswers[index].answer = value;
+			updatedQuiz[qIndex].answer = updatedAnswers;
+			return updatedQuiz;
+		});
+	}
+
 	function addQuestion(){
-		setNewQuiz(function(prevQuiz){  
+		setQuiz(function(prevQuiz){  
 			return [
 				...prevQuiz,
-				{ id: Date.now() + Math.random() } 
+				{ 
+					answer: [{answer:" ", is_correct: true},{answer:" ", is_correct: false},{answer:" ", is_correct: false}],
+					question: "",
+					question_id: Date.now() + Math.random() 
+				} 
 			]
 		});
 	}
-	function removeQuestion(id){
-		const index = newQuiz.findIndex(item => item.id === id);
-		setNewQuiz(function(oldQuiz){
+	function removeQuestion(question_id){
+		const index = quiz.findIndex(item => item.question_id === question_id);
+		setQuiz(function(oldQuiz){
 			return [
 				...oldQuiz.slice(0, index),
 				...oldQuiz.slice(index + 1)
@@ -53,46 +70,41 @@ const EditQuiz = function(){
 		});
 	}
 
-	// function validateQuiz(){
-	// 	if(quizName){
-	// 		const allQFilled = newQuiz.every(function(q){
-	// 			return q.Q && q.A && q.D1 && q.D2
-	// 		})
-	// 		if(!allQFilled){
-	// 			alert("all questions must be completed");
-	// 		}else{
-	// 			createQuiz()
-	// 		}
-	// 	}else{
-	// 		alert("Please name your quiz");
-	// 	}
-	// }
+	function validateQuiz(){
+		if(quizName){
+			const allQFilled = quiz.every(function(q){
+				return q.answer[0].answer && q.answer[1].answer && q.answer[2].answer && q.question
+			})
+			if(!allQFilled){
+				alert("all questions must be completed");
+			}else{
+				createQuiz()
+			}
+		}else{
+			alert("Please name your quiz");
+		}
+	}
 
-	// async function createQuiz() {
-	// 	setInserting(true);
-	// 	const {data, error} = await supabase.from('quiz').insert({teacher_id: sessionStorage.getItem('userId'), quiz_name: quizName}).select();
-	// 	if(data){
-	// 		const questionIds = [];
-	// 		for(let i = 0; i < newQuiz.length; i++){
-	// 			const {data: qData, error: qErr} = await supabase.from('question').insert({quiz_id: data[0].quiz_id, question: newQuiz[i].Q}).select();
-	// 			const {data: aData, error: aErr} = await supabase.from('answer').insert(
-	// 				[
-	// 					{question_id: qData[0].question_id, answer: newQuiz[i].A, is_correct: true},
-	// 					{question_id: qData[0].question_id, answer: newQuiz[i].D1, is_correct: false},
-	// 					{question_id: qData[0].question_id, answer: newQuiz[i].D2, is_correct: false}
-	// 				]
-	// 			);
-	// 		}
-	// 	}else{
-	// 		console.log(error);
-	// 	}
-
-	// 	setInserting(false);
-	// }
+	async function createQuiz() {
+		setInserting(true);
+		if(quizName != savedQuizName){
+			const {error} = await supabase.from('quiz').update({quiz_name: quizName}).eq('quiz_id', id);
+		}
+		const updatedQuestion = [];
+		const newQuestions = [];
+		for(let i = 0; i < quiz.length; i++){
+			if(Number.isInteger(quiz[i].question_id)){
+				updatedQuestion.push(quiz[i]);
+			}else{
+				newQuestions.push(quiz[i]);
+			}
+		}
+		setInserting(false);
+	}
 
 	if(loggedIn){
 		return(
-			quiz != null ? (
+			(quiz != null) ? (
 				<>
 					<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': false}} />
 					<div className="white-overlay">
@@ -103,27 +115,27 @@ const EditQuiz = function(){
 								<div className="question" key={item.question_id}>
 									<i className="fa fa-2 fa-window-close" aria-hidden="true" onClick={()=>{removeQuestion(item.question_id)}}></i>
 									<label className="create-new-quiz-label" htmlFor={"Q" + index}>Question {index + 1}:</label>
-									<input className="create-new-quiz-input" type="text" id={"Q" + index} onInput={(e)=>{updateQuestion(e.target.value, "Q", index)}} value={item.question} />
+									<input className="create-new-quiz-input" type="text" id={"Q" + index} onInput={(e)=>{updateQuestion(e.target.value, "question", item.question_id)}} value={item.question} />
 									{item.answer.map(function(ans, index2){
 										return (
-											<>
+											<Fragment key={index2}>
 												{ans.is_correct ? (
-													<label className="create-new-quiz-label" htmlFor={"A" + index2}>Answer:</label>
+													<label className="create-new-quiz-label" key={"D" + index2 + 'key'} htmlFor={index + "-" + index2}>Answer:</label>
 												) : (
-													<label className="create-new-quiz-label" htmlFor={"D" + index2}>Distractor:</label>
+													<label className="create-new-quiz-label" key={"D" + index2 + 'key'}
+													htmlFor={index + "-" + index2}>Distractor:</label>
 												)}
-												<input className="create-new-quiz-input" type="text" id={index + "-" + index2} onInput={(e)=>{updateQuestion(e.target.value, "D2", index)}} value={ans.answer} />
-											</>
+												
+													<input className="create-new-quiz-input" type="text" id={index + "-" + index2}  key={index + "-" + index2} onInput={(e)=>{updateAnswer(e.target.value, item.question_id, index2)}} value={ans.answer || quiz[index].answer[index2] } />
+											</Fragment>
 										)
 									})}
-									{/* <label className="create-new-quiz-label" htmlFor={"D2" + index}>Second Distractor:</label>
-									<input className="create-new-quiz-input" type="text" id={"D2" + index} onInput={(e)=>{updateQuestion(e.target.value, "D2", index)}} /> */}
 								</div>
 							)
 						})}
-						<Button className="plus-button add-new-question-button" buttonText="+" onClickFunc={alert} />
+						<Button className="plus-button add-new-question-button" buttonText="+" onClickFunc={addQuestion} />
 						{!inserting ? (
-							<Button buttonText='Create Quiz' onClickFunc={alert} />
+							<Button buttonText='Save Quiz' onClickFunc={validateQuiz} />
 						):(
 							<Button buttonText='Inserting...' disabled={true} />
 						)}
@@ -143,11 +155,6 @@ const EditQuiz = function(){
 			<NotLoggedIn />
 		)
 	}
-	// }else{
-	// 	return (
-	// 		
-	// 	)
-	// }
 };
 
 export default EditQuiz;
