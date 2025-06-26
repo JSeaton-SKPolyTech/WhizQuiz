@@ -8,10 +8,10 @@
 	width: 60%;
 }
 .question {
+	position: relative;
 	margin-top: 20px;
 }
 .question:hover{
-	position: relative;
 	background-color: #fee90013;
 }
 .fa-window-close{
