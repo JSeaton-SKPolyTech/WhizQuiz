@@ -13,6 +13,7 @@ const EditQuiz = function(){
 	const calledAPI = useRef(false);
 	let savedQuizName;
 	const [quizName, setQuizName] = useState("");
+	const [deletedQuestions, setDeletedQuestion] = useState([]);
 	const [inserting, setInserting] = useState(false);
 
 	let isQuestionUpdated = false;
@@ -73,6 +74,9 @@ const EditQuiz = function(){
 				...oldQuiz.slice(index + 1)
 			];
 		});
+		setDeletedQuestion(function(oldArr){
+			return [...oldArr, question_id]
+		});
 	}
 
 	function validateQuiz(){
@@ -130,11 +134,10 @@ const EditQuiz = function(){
 			const {data: data4, error: error4} = await supabase.from('answer').insert({question_id: data1[0].question_id, answer: newQuestions[i].answer[2].answer, is_correct: false}).select();
 			// update answer_id
 		}
-
-
-
-		// update saved array
-
+		for(let i = 0; i < deletedQuestions.length; i++){
+			const response1 = await supabase.from('answer').delete().eq('question_id', deletedQuestions[i]);
+			const response2 = await supabase.from('question').delete().eq('question_id', deletedQuestions[i]);
+		}
 		
 		setInserting(false);
 	}
