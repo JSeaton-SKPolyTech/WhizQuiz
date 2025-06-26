@@ -1,21 +1,23 @@
 import { Fragment, useEffect, useRef, useState } from "react";
+import { useParams, Navigate, useNavigate } from "react-router-dom";
 
 import supabase from "../API/init";
 import { Button, NotLoggedIn, TeacherNav, LabelledInput } from "../components";
-import { useParams } from "react-router-dom";
 
 const EditQuiz = function(){
 
 	let loggedIn = sessionStorage.getItem('loggedIn');
-	const [quiz, setQuiz] = useState(null);
-	const savedQuiz = useRef();
 	const {id} = useParams();
+	const savedQuiz = useRef();
 	const calledAPI = useRef(false);
-	let savedQuizName;
+	const navigate = useNavigate();
+
+	const [quiz, setQuiz] = useState(null);
 	const [quizName, setQuizName] = useState("");
 	const [deletedQuestions, setDeletedQuestion] = useState([]);
 	const [inserting, setInserting] = useState(false);
 
+	let savedQuizName;
 	let isQuestionUpdated = false;
 
 	useEffect(function(){
@@ -142,11 +144,15 @@ const EditQuiz = function(){
 		setInserting(false);
 	}
 
+	function startQuizSelected(){
+		navigate(`/start/${id}`);
+	}
+
 	if(loggedIn){
 		return(
 			(quiz != null) ? (
 				<>
-					<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': false}} />
+					<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': true, 'startQuiz': false}} startQuiz={startQuizSelected} />
 					<div className="white-overlay">
 						<label className="create-new-quiz-label" htmlFor='quizName'>Quiz Title:</label>
 						<input className="create-new-quiz-input" type="text" id='quizName' onInput={(e)=>{setQuizName(e.target.value)}} value={quizName} />

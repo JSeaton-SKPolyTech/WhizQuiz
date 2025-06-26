@@ -80,7 +80,7 @@ const NewQuiz = function(){
 	if(loggedIn){
 		return(
 			<>
-				<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': true}} />
+				<TeacherNav disabledButtons={{'dashboard': false, 'newQuiz': true, 'startQuiz': true}} />
 				<div className="white-overlay">
 					<label className="create-new-quiz-label" htmlFor='quizName'>Quiz Title:</label>
 					<input className="create-new-quiz-input" type="text" id='quizName' onInput={(e)=>{setQuizName(e.target.value)}} value={quizName} />
